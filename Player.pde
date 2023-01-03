@@ -3,6 +3,7 @@ class Player extends GameObject {
   boolean aKeyPressed = false;
   boolean sKeyPressed = false;
   boolean dKeyPressed = false;
+  Gun gun;
 
   Player(float x, float y) {
     this.x = x;
@@ -10,12 +11,15 @@ class Player extends GameObject {
     this.health = 3;
     this.size = 50;
     this.speed = 5;
+    gun = new Gun(x, y);
   }
 
   void draw() {
     move();
-    fill(255, 0, 0);
+    fill(0, 200, 2000);
     circle(x, y, size);
+
+    gun.draw(x, y);
   }
 
   void move() {
@@ -64,5 +68,13 @@ class Player extends GameObject {
     if (key == 'd') {
       dKeyPressed = false;
     }
+  }
+
+  void mousePressed() {
+    gun.mousePressed();
+  }
+
+  void mouseReleased() {
+    gun.mouseReleased();
   }
 }

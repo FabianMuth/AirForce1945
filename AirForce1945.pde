@@ -1,10 +1,10 @@
 /**
 * A game like 1945 Air Force but worse.
 * @author Fabian Muth
-* @version 02-01-2023
+* @version 03-01-2023
 */
 
-static String version = "1.0";
+static String version = "1.1";
 ArrayList<Bullet> bullets;
 ArrayList<Enemy> enemies;
 Player player;
@@ -18,19 +18,8 @@ void setup() {
   enemies = new ArrayList<Enemy>();
 }
 
-void keyPressed() {
-  player.keyPressed();
-}
-void keyReleased() {
-  player.keyReleased();
-}
-
-void mousePressed() {
-  bullets.add(new Bullet(player.x + 50, player.y - 25));
-}
-
 void draw() {
-  background(255); // clear the screen
+  background(200);
 
   player.draw();
 
@@ -51,7 +40,6 @@ void draw() {
       Bullet b = bullets.get(i);
       Enemy e = enemies.get(j);
       if (b.collidesWith(e)) {
-        // remove the bullet and the enemy
         bullets.remove(i);
         enemies.remove(j);
       }
@@ -61,4 +49,19 @@ void draw() {
   if (random(1) < 0.01) {
     enemies.add(new Enemy());
   }
+}
+
+void keyPressed() {
+  player.keyPressed();
+}
+void keyReleased() {
+  player.keyReleased();
+}
+
+void mousePressed() {
+  player.mousePressed();
+}
+
+void mouseReleased() {
+  player.mouseReleased();
 }

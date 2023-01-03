@@ -1,6 +1,7 @@
 class GameObject {
   float x, y;
   int health;
+  int damage;
   int size;
   float speed;
 

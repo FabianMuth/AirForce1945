@@ -12,6 +12,7 @@ class Enemy extends GameObject {
   }
 
   void draw() {
+    fill(255,0,0);
     circle(x, y, size);
   }
 }
