@@ -12,7 +12,15 @@ class Enemy extends GameObject {
   }
 
   void draw() {
-    fill(255,0,0);
+    fill(255, 0, 0);
     circle(x, y, size);
+  }
+
+  boolean isOffScreen() {
+    return y > height;
+  }
+
+  void die() {
+    explosions.add(new ParticleExplosion((int)x, (int)y, 30));
   }
 }

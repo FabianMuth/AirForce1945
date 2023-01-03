@@ -1,54 +1,75 @@
 /**
-* A game like 1945 Air Force but worse.
-* @author Fabian Muth
-* @version 03-01-2023
-*/
+ * A game like 1945 Air Force but worse.
+ * @author Fabian Muth
+ * @version 03-01-2023
+ */
 
-static String version = "1.1";
-ArrayList<Bullet> bullets;
-ArrayList<Enemy> enemies;
+static String version = "1.2";
 Player player;
+ArrayList<Enemy> enemies;
+ArrayList<Bullet> bullets;
+ArrayList<ParticleExplosion> explosions;
+
+EnemyManager enemyManager;
+CollisionManager collisionManager;
+ExplosionManager explosionManager;
 
 void setup() {
-  size(400, 600);
+  size(600, 800);
   surface.setTitle("1945 Air Force - Fabian Muth [mt221092] - V" + version);
   surface.setResizable(true);
+
   player = new Player(150, 550);
-  bullets = new ArrayList<Bullet>();
   enemies = new ArrayList<Enemy>();
+  bullets = new ArrayList<Bullet>();
+  explosions = new ArrayList<ParticleExplosion>();
+
+  enemyManager = new EnemyManager();
+  collisionManager = new CollisionManager();
+  explosionManager = new ExplosionManager();
+  
 }
 
 void draw() {
   background(200);
 
+  //println("main e: " + enemies);
+  enemyManager.manageEnemies();
+  collisionManager.manageCollisions();
+  explosionManager.manageExplosions();
+  
   player.draw();
 
-  for (int i = 0; i < bullets.size(); i++) {
-    Bullet b = bullets.get(i);
-    b.move();
-    b.draw();
-  }
+  //for (int i = 0; i < bullets.size(); i++) {
+  //  Bullet b = bullets.get(i);
+  //  b.move();
+  //  b.draw();
+  //}
 
-  for (int i = 0; i < enemies.size(); i++) {
-    Enemy e = enemies.get(i);
-    e.move();
-    e.draw();
-  }
+  //for (int i = 0; i < enemies.size(); i++) {
+  //  Enemy e = enemies.get(i);
+  //  e.move();
+  //  e.draw();
+  //}
 
-  for (int i = 0; i < bullets.size(); i++) {
-    for (int j = 0; j < enemies.size(); j++) {
-      Bullet b = bullets.get(i);
-      Enemy e = enemies.get(j);
-      if (b.collidesWith(e)) {
-        bullets.remove(i);
-        enemies.remove(j);
-      }
-    }
-  }
+  //for (int i = 0; i < bullets.size(); i++) {
+  //  for (int j = 0; j < enemies.size(); j++) {
+  //    if (bullets.size() > 0 && enemies.size() > 0) {
+  //      Bullet b = bullets.get(i);
+  //      Enemy e = enemies.get(j);
+  //      if (b.collidesWith(e)) {
+  //        bullets.remove(i);
+  //        enemies.remove(j);
+  //      }
+  //    }
+  //  }
+  //}
+  
+  //println("main: " + bullets.size());
 
-  if (random(1) < 0.01) {
-    enemies.add(new Enemy());
-  }
+  //if (random(1) < 0.01) {
+  //  enemies.add(new Enemy());
+  //}
 }
 
 void keyPressed() {

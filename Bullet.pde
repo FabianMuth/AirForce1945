@@ -14,6 +14,11 @@ class Bullet extends GameObject {
     this(x, y);
     this.isEnemyBullet = isEnemyBullet;
   }
+  
+  Bullet(float x, float y, float speed) {
+    this(x, y);
+    this.speed = speed;
+  }
 
   void move() {
     y -= speed;
