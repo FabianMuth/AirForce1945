@@ -1,10 +1,10 @@
 /**
  * A game like 1945 Air Force but worse.
  * @author Fabian Muth
- * @version 03-01-2023
+ * @version 04-01-2023
  */
 
-static String version = "1.2";
+static String version = "1.3";
 Player player;
 ArrayList<Enemy> enemies;
 ArrayList<Bullet> bullets;
@@ -27,17 +27,26 @@ void setup() {
   enemyManager = new EnemyManager();
   collisionManager = new CollisionManager();
   explosionManager = new ExplosionManager();
-  
 }
 
 void draw() {
   background(200);
 
+  //update bullets
+  for (int i = bullets.size()-1; i >= 0; i--) {
+    if (bullets.get(i).isOffScreen()) {
+      bullets.remove(i);
+    } else {
+      bullets.get(i).move();
+      bullets.get(i).draw();
+    }
+  }
+
   //println("main e: " + enemies);
   enemyManager.manageEnemies();
   collisionManager.manageCollisions();
   explosionManager.manageExplosions();
-  
+
   player.draw();
 
   //for (int i = 0; i < bullets.size(); i++) {
@@ -64,7 +73,7 @@ void draw() {
   //    }
   //  }
   //}
-  
+
   //println("main: " + bullets.size());
 
   //if (random(1) < 0.01) {

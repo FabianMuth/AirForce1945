@@ -15,6 +15,8 @@ class EnemyManager {
 
     if (random(1) < 0.01) {
       enemies.add(new Enemy());
+      enemies.add(new EnemyMeteorite());
+      enemies.add(new EnemyShooterStraight());
     }
   }
 }

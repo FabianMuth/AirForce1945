@@ -13,7 +13,7 @@ class CollisionManager {
   }
 
   void manageCollisions() {
-    checkBulletEnemyCollision();
+    //checkBulletEnemyCollision();
     checkEnemybulletPlayerCollision();
   }
 
@@ -23,7 +23,7 @@ class CollisionManager {
 
     for (int i = 0; i < bullets.size(); i++) {
       for (int j = 0; j < enemies.size(); j++) {
-        if (bullets.size() > 0 && enemies.size() > 0) {
+        //if (bullets.size() > 0 && enemies.size() > 0) {
           Bullet b = bullets.get(i);
           Enemy e = enemies.get(j);
           if (b.collidesWith(e)) {
@@ -31,7 +31,7 @@ class CollisionManager {
             e.die();
             enemies.remove(j);
           }
-        }
+        //}
       }
     }
   }
