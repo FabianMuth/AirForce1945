@@ -8,6 +8,7 @@ class EnemyShooterStraight extends Enemy {
   }
   
   void draw() {
+    noStroke();
     fill(#CE0FFA);
     circle(x, y, size);
     gunEnemy.draw(x,y);

@@ -30,6 +30,7 @@ class Bullet extends GameObject {
   }
 
   void draw() {
+    noStroke();
     fill(255);
     ellipse(x, y, size, 10);
   }

@@ -16,6 +16,7 @@ class Player extends GameObject {
 
   void draw() {
     move();
+    noStroke();
     fill(0, 200, 2000);
     circle(x, y, size);
 
@@ -38,6 +39,14 @@ class Player extends GameObject {
 
     x = constrain(x, 0 + size/2, width - size/2);
     y = constrain(y, 0 + size/2, height - size/2);
+  }
+
+  void receiveDamage(int damage) {
+    health -= damage;
+  }
+
+  void die() {
+    explosions.add(new ParticleExplosion((int)x, (int)y, 100));
   }
 
   void keyPressed() {
@@ -76,5 +85,9 @@ class Player extends GameObject {
 
   void mouseReleased() {
     gun.mouseReleased();
+  }
+
+  int getHealth() {
+    return this.health;
   }
 }

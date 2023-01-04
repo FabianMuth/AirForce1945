@@ -6,6 +6,7 @@ class EnemyMeteorite extends Enemy {
   }
   
   void draw() {
+    noStroke();
     fill(155, 100, 100);
     circle(x, y, size);
   }

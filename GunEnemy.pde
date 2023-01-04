@@ -12,12 +12,13 @@ class GunEnemy extends Gun {
     //println("gun: " + bullets.size());
 
     fill(0);
+    rectMode(CORNER);
     rect(x-10, y-10, 20, 20);
     
     
     if (millis() - lastShotTime > delay*1000) {
       println("enemy shooting");
-      bullets.add(new Bullet(x, y, 5, shootingDirection));
+      enemyBullets.add(new Bullet(x, y, 5, shootingDirection));
       lastShotTime = millis();
     }
   }

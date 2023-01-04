@@ -7,7 +7,6 @@ class Enemy extends GameObject {
     this.size = 60;
     this.speed = 3;
     this.score = 100;
-    this.gun = new Gun(x,y);
   }
 
   void move() {
@@ -15,6 +14,7 @@ class Enemy extends GameObject {
   }
 
   void draw() {
+    noStroke();
     fill(255, 0, 0);
     circle(x, y, size);
   }
