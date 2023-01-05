@@ -3,12 +3,18 @@ class Player extends GameObject {
   boolean aKeyPressed = false;
   boolean sKeyPressed = false;
   boolean dKeyPressed = false;
+  boolean disabled = false;
   Gun gun;
+
+  float xDeathPos = 0;
+  boolean dieToRight = true;
+  float deathExplosionSpacing = 0.3;
+  float lastDeathExplosion = 0;
 
   Player(float x, float y) {
     this.x = x;
     this.y = y;
-    this.health = 3;
+    this.health = 2;
     this.size = 50;
     this.speed = 5;
     gun = new Gun(x, y);
@@ -24,29 +30,44 @@ class Player extends GameObject {
   }
 
   void move() {
-    if (wKeyPressed) {
-      y -= speed;
-    }
-    if (aKeyPressed) {
-      x -= speed;
-    }
-    if (sKeyPressed) {
-      y += speed;
-    }
-    if (dKeyPressed) {
-      x += speed;
-    }
+    if (!disabled) {
+      if (wKeyPressed) {
+        y -= speed;
+      }
+      if (aKeyPressed) {
+        x -= speed;
+      }
+      if (sKeyPressed) {
+        y += speed;
+      }
+      if (dKeyPressed) {
+        x += speed;
+      }
 
-    x = constrain(x, 0 + size/2, width - size/2);
-    y = constrain(y, 0 + size/2, height - size/2);
-  }
-
-  void receiveDamage(int damage) {
-    health -= damage;
+      x = constrain(x, 0 + size/2, width - size/2);
+      y = constrain(y, 0 + size/2, height - size/2);
+    } else {
+      y += speed/2;
+      //x = noise(y * 0.0025) * height;
+      x = dieToRight ? lerp(x, xDeathPos+200, speed/4*0.01) : lerp(x, xDeathPos-200, speed/4*0.01);
+      if (millis() - lastDeathExplosion > deathExplosionSpacing * 1000) {
+        explosions.add(new ParticleExplosion((int)x, (int)y, 100));
+        lastDeathExplosion = millis();
+      }
+    }
   }
 
   void die() {
+    println("player died");
     explosions.add(new ParticleExplosion((int)x, (int)y, 100));
+    lastDeathExplosion = millis();
+    xDeathPos = x;
+    //int temp_rand = random(1);
+    dieToRight = round(random(1)) == 0 ? true : false;
+    disabled = true;
+  }
+
+  void disableControls() {
   }
 
   void keyPressed() {
@@ -80,11 +101,11 @@ class Player extends GameObject {
   }
 
   void mousePressed() {
-    gun.mousePressed();
+    if (!disabled) gun.mousePressed();
   }
 
   void mouseReleased() {
-    gun.mouseReleased();
+    if (!disabled) gun.mouseReleased();
   }
 
   int getHealth() {

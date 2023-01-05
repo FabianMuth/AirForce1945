@@ -1,13 +1,13 @@
 /**
  * A game like 1945 Air Force but worse.
  * @author Fabian Muth
- * @version 04-01-2023
+ * @version 05-01-2023
  */
 
-static String version = "1.4";
+static String version = "1.5";
 
 boolean gamePaused = false;
-boolean roundOngoing = false;
+boolean roundOngoing = true;
 
 Player player;
 ArrayList<Enemy> enemies;
@@ -45,21 +45,23 @@ void draw() {
 
     //update bullets
     for (int i = bullets.size()-1; i >= 0; i--) {
-      if (bullets.get(i).isOffScreen()) {
-        bullets.remove(i);
+      Bullet b = bullets.get(i);
+      if (b.isOffScreen() || b.getHealth() <= 0) {
+        bullets.remove(b);
       } else {
-        bullets.get(i).move();
-        bullets.get(i).draw();
+        b.move();
+        b.draw();
       }
     }
 
     //update enemyBullets
     for (int i = enemyBullets.size()-1; i >= 0; i--) {
-      if (enemyBullets.get(i).isOffScreen()) {
-        enemyBullets.remove(i);
+      Bullet eb = enemyBullets.get(i);
+      if (eb.isOffScreen() || eb.getHealth() <= 0) {
+        enemyBullets.remove(eb);
       } else {
-        enemyBullets.get(i).move();
-        enemyBullets.get(i).draw();
+        eb.move();
+        eb.draw();
       }
     }
 
@@ -70,7 +72,7 @@ void draw() {
 
     player.draw();
 
-    if (player.getHealth() <= 0) {
+    if (player.getHealth() <= 0 && roundOngoing) {
       player.die();
       endGame();
     }
@@ -132,7 +134,7 @@ void keyReleased() {
 
 void mousePressed() {
   player.mousePressed();
-  if(gamePaused) menuScreen.mousePressed();
+  if (gamePaused) menuScreen.mousePressed();
 }
 
 void mouseReleased() {

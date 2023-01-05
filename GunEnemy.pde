@@ -18,7 +18,7 @@ class GunEnemy extends Gun {
     
     if (millis() - lastShotTime > delay*1000) {
       println("enemy shooting");
-      enemyBullets.add(new Bullet(x, y, 5, shootingDirection));
+      enemyBullets.add(new Bullet(x, y, 5, shootingDirection, true));
       lastShotTime = millis();
     }
   }

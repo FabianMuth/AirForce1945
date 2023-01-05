@@ -9,4 +9,12 @@ class GameObject {
     float distance = sqrt((other.x - x) * (other.x - x) + (other.y - y) * (other.y - y));
     return distance < (size + other.size);
   }
+
+  void takeDamage(int damage) {
+    health -= damage;
+  }
+
+  int getHealth() {
+    return this.health;
+  }
 }

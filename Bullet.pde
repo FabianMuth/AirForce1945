@@ -1,6 +1,9 @@
+import java.util.UUID;
+
 class Bullet extends GameObject {
   boolean isEnemyBullet;
   PVector shootingDirection;
+  String _UUID;
 
   Bullet(float x, float y) {
     this.x = x;
@@ -11,6 +14,7 @@ class Bullet extends GameObject {
     this.damage = 1;
     this.isEnemyBullet = false;
     this.shootingDirection = new PVector(0, -1);
+    this._UUID = UUID.randomUUID().toString();
   }
 
   Bullet(float x, float y, boolean isEnemyBullet) {
@@ -18,10 +22,11 @@ class Bullet extends GameObject {
     this.isEnemyBullet = isEnemyBullet;
   }
 
-  Bullet(float x, float y, float speed, PVector shootingDirection) {
+  Bullet(float x, float y, float speed, PVector shootingDirection, boolean isEnemyBullet) {
     this(x, y);
     this.speed = speed;
     this.shootingDirection = shootingDirection;
+    this.isEnemyBullet = isEnemyBullet;
   }
 
   void move() {
@@ -36,6 +41,10 @@ class Bullet extends GameObject {
   }
 
   boolean isOffScreen() {
-    return y < 0;
+    return isEnemyBullet ? y > height : y < 0;
+  }
+
+  String getUUID() {
+    return _UUID;
   }
 }

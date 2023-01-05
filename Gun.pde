@@ -33,8 +33,8 @@ class Gun {
     rect(x-10, y-10, 20, 20);
     
     if (shooting) {
-      if (millis() - lastShotTime > delay*1000) {
-        bullets.add(new Bullet(x, y, 5, shootingDirection));
+      if (millis() - lastShotTime > delay * 1000) {
+        bullets.add(new Bullet(x, y, 5, shootingDirection, false));
         lastShotTime = millis();
       }
     }

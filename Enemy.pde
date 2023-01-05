@@ -1,5 +1,7 @@
 class Enemy extends GameObject {
   int score;
+  ArrayList<String> alreadyHitBy;
+
   Enemy() {
     this.x = random(width);
     this.y = -50;
@@ -7,6 +9,7 @@ class Enemy extends GameObject {
     this.size = 60;
     this.speed = 3;
     this.score = 100;
+    this.alreadyHitBy = new ArrayList<String>();
   }
 
   void move() {
@@ -25,5 +28,13 @@ class Enemy extends GameObject {
 
   void die() {
     explosions.add(new ParticleExplosion((int)x, (int)y, 30));
+  }
+
+  ArrayList<String> getAlreadyHitBy() {
+    return alreadyHitBy;
+  }
+
+  void addBulletAlreadyHitBy(String id) {
+    this.alreadyHitBy.add(id);
   }
 }
