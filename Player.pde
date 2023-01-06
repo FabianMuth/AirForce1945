@@ -4,20 +4,27 @@ class Player extends GameObject {
   boolean sKeyPressed = false;
   boolean dKeyPressed = false;
   boolean disabled = false;
+
   Gun gun;
 
   float xDeathPos = 0;
   boolean dieToRight = true;
-  float deathExplosionSpacing = 0.3;
+  float deathExplosionSpacing = 0.4;
   float lastDeathExplosion = 0;
 
-  Player(float x, float y) {
-    this.x = x;
-    this.y = y;
-    this.health = 2;
+  Player() {
+    this.health = 3;
     this.size = 50;
+    this.x = width/2-size/2;
+    this.y = height*0.8;
     this.speed = 5;
     gun = new Gun(x, y);
+  }
+
+  Player(float x, float y) {
+    this();
+    this.x = x;
+    this.y = y;
   }
 
   void draw() {
@@ -62,12 +69,8 @@ class Player extends GameObject {
     explosions.add(new ParticleExplosion((int)x, (int)y, 100));
     lastDeathExplosion = millis();
     xDeathPos = x;
-    //int temp_rand = random(1);
     dieToRight = round(random(1)) == 0 ? true : false;
     disabled = true;
-  }
-
-  void disableControls() {
   }
 
   void keyPressed() {

@@ -1,13 +1,15 @@
 /**
  * A game like 1945 Air Force but worse.
  * @author Fabian Muth
- * @version 05-01-2023
+ * @version 06-01-2023
  */
 
-static String version = "1.5";
+static String version = "1.6";
 
 boolean gamePaused = false;
 boolean roundOngoing = true;
+float gameOverTime = 0;
+float afterDeathTime = 5;
 
 Player player;
 ArrayList<Enemy> enemies;
@@ -25,18 +27,7 @@ void setup() {
   size(600, 800);
   surface.setTitle("1945 Air Force - Fabian Muth [mt221092] - V" + version);
   surface.setResizable(true);
-
-  player = new Player(150, 550);
-  enemies = new ArrayList<Enemy>();
-  bullets = new ArrayList<Bullet>();
-  enemyBullets = new ArrayList<Bullet>();
-  explosions = new ArrayList<ParticleExplosion>();
-
-  enemyManager = new EnemyManager();
-  collisionManager = new CollisionManager();
-  explosionManager = new ExplosionManager();
-
-  menuScreen = new MenuScreen();
+  resetGame();
 }
 
 void draw() {
@@ -65,7 +56,6 @@ void draw() {
       }
     }
 
-    //println("main e: " + enemies);
     enemyManager.manageEnemies();
     collisionManager.manageCollisions();
     explosionManager.manageExplosions();
@@ -77,52 +67,40 @@ void draw() {
       endGame();
     }
 
-    //for (int i = 0; i < bullets.size(); i++) {
-    //  Bullet b = bullets.get(i);
-    //  b.move();
-    //  b.draw();
-    //}
-
-    //for (int i = 0; i < enemies.size(); i++) {
-    //  Enemy e = enemies.get(i);
-    //  e.move();
-    //  e.draw();
-    //}
-
-    //for (int i = 0; i < bullets.size(); i++) {
-    //  for (int j = 0; j < enemies.size(); j++) {
-    //    if (bullets.size() > 0 && enemies.size() > 0) {
-    //      Bullet b = bullets.get(i);
-    //      Enemy e = enemies.get(j);
-    //      if (b.collidesWith(e)) {
-    //        bullets.remove(i);
-    //        enemies.remove(j);
-    //      }
-    //    }
-    //  }
-    //}
-
-    //println("main: " + bullets.size());
-
-    //if (random(1) < 0.01) {
-    //  enemies.add(new Enemy());
-    //}
+    if (!roundOngoing && millis() - gameOverTime > afterDeathTime * 1000) {
+      resetGame();
+    }
   } else {
     menuScreen.draw();
   }
 }
 
 void endGame() {
-  roundOngoing = false;
   println("GAME OVER");
+  roundOngoing = false;
+  gameOverTime = millis();
 }
 
-public static void resetGame() {
+void resetGame() {
   println("RESETTING GAME");
+  player = new Player();
+  enemies = new ArrayList<Enemy>();
+  bullets = new ArrayList<Bullet>();
+  enemyBullets = new ArrayList<Bullet>();
+  explosions = new ArrayList<ParticleExplosion>();
+
+  enemyManager = new EnemyManager();
+  collisionManager = new CollisionManager();
+  explosionManager = new ExplosionManager();
+
+  menuScreen = new MenuScreen();
+
+  gamePaused = false;
+  roundOngoing = true;
 }
 
 void keyPressed() {
-  if (key == 'p') {
+  if (key == 'p' && roundOngoing) {
     gamePaused = !gamePaused;
     menuScreen.drawBackground();
   }

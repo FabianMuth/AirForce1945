@@ -13,9 +13,9 @@ class CollisionManager {
   }
 
   void manageCollisions() {
-    //println("\nb: " + bullets.size());
-    //println("eb: " + enemyBullets.size());
-    //println("e: " + enemies.size());
+    println("\nb: " + bullets.size());
+    println("eb: " + enemyBullets.size());
+    println("e: " + enemies.size());
 
     checkBulletEnemyCollision();
     checkEnemybulletPlayerCollision();
@@ -29,7 +29,8 @@ class CollisionManager {
           //if (bullets.size() > 0 && enemies.size() > 0) {
           Bullet b = bullets.get(i);
           Enemy e = enemies.get(j);
-          if (b.collidesWith(e) && e.getAlreadyHitBy().contains(b.getUUID())) {
+          if (b.collidesWith(e) && !e.getAlreadyHitBy().contains(b.getUUID())) {
+            println("enemy hit");
             b.takeDamage(1);
             e.takeDamage(1);
             e.addBulletAlreadyHitBy(b.getUUID());
@@ -72,7 +73,7 @@ class CollisionManager {
       }
     }
     catch(IndexOutOfBoundsException e) {
-      println("IndexOutOfBoundsException in enemyBullets");
+      println("IndexOutOfBoundsException in enemies");
       e.printStackTrace();
     }
   }

@@ -17,4 +17,8 @@ class GameObject {
   int getHealth() {
     return this.health;
   }
+
+  int getSize() {
+    return this.size;
+  }
 }
