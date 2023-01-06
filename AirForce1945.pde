@@ -2,9 +2,11 @@
  * A game like 1945 Air Force but worse.
  * @author Fabian Muth
  * @version 06-01-2023
+ *
+ * TODO: add background (3d terrain & galaxy), add sprites, add hit visualizer, add end game screen, improve enemy spawner, change ScoreCounter from local to github
  */
 
-static String version = "1.6";
+static String version = "1.7";
 
 boolean gamePaused = false;
 boolean roundOngoing = true;
@@ -22,11 +24,13 @@ CollisionManager collisionManager;
 ExplosionManager explosionManager;
 
 MenuScreen menuScreen;
+ScoreCounter scoreCounter;
 
 void setup() {
   size(600, 800);
   surface.setTitle("1945 Air Force - Fabian Muth [mt221092] - V" + version);
   surface.setResizable(true);
+  //frameRate(20);
   resetGame();
 }
 
@@ -61,6 +65,7 @@ void draw() {
     explosionManager.manageExplosions();
 
     player.draw();
+    scoreCounter.drawScore();
 
     if (player.getHealth() <= 0 && roundOngoing) {
       player.die();
@@ -94,6 +99,7 @@ void resetGame() {
   explosionManager = new ExplosionManager();
 
   menuScreen = new MenuScreen();
+  scoreCounter = new ScoreCounter(width-60, 10);
 
   gamePaused = false;
   roundOngoing = true;

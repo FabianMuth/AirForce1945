@@ -6,8 +6,10 @@ class GameObject {
   float speed;
 
   boolean collidesWith(GameObject other) {
-    float distance = sqrt((other.x - x) * (other.x - x) + (other.y - y) * (other.y - y));
-    return distance < (size + other.size);
+    //float distance = sqrt((other.x - x) * (other.x - x) + (other.y - y) * (other.y - y));
+    float distance = dist(x, y, other.x, other.y);
+    //println("dist: " + distance + ", sizes: " + (size/2+other.size/2));
+    return distance <= (size/2 + other.size/2);
   }
 
   void takeDamage(int damage) {
