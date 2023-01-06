@@ -38,7 +38,7 @@ class ScoreCounter {
   void saveScore() {
     println("saving score");
     TableRow newRow = scores.addRow();
-    println(scores.getRowCount());
+    //println(scores.getRowCount());
     newRow.setInt("id", scores.getRowCount()-1);
     newRow.setString("name", "player_" + str(scores.getRowCount()-1));
     newRow.setInt("score", score);
@@ -59,17 +59,16 @@ class ScoreCounter {
     println("loading highscore");
     int scr = 0;
     for (TableRow row : scores.rows()) {
-      println("scores: " + row.getColumnTitle(0));
-      println("id: " + row.getInt("id"));
+      //println("scores: " + row.getColumnTitle(0));
+      //println("id: " + row.getInt("id"));
       scr = row.getInt("score");
       if (highscore < scr) highscore = scr;
     }
-    println("highscore" + highscore);
+    //println("highscore" + highscore);
   }
 
   void addScore(int score) {
     this.score += score;
-    saveScore();
   }
 
   void reset() {

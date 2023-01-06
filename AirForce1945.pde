@@ -3,10 +3,10 @@
  * @author Fabian Muth
  * @version 06-01-2023
  *
- * TODO: add background (3d terrain & galaxy), add sprites, add hit visualizer, add end game screen, improve enemy spawner, change ScoreCounter from local to github
+ * TODO: add background (3d terrain & galaxy), add sprites, add background music & SFX, add hit visualizer, add end game screen, add abilities, improve enemy spawner, change ScoreCounter from local to github
  */
 
-static String version = "1.7";
+static String version = "1.8";
 
 boolean gamePaused = false;
 boolean roundOngoing = true;
@@ -84,6 +84,7 @@ void endGame() {
   println("GAME OVER");
   roundOngoing = false;
   gameOverTime = millis();
+  scoreCounter.saveScore();
 }
 
 void resetGame() {
@@ -99,9 +100,10 @@ void resetGame() {
   explosionManager = new ExplosionManager();
 
   menuScreen = new MenuScreen();
+  menuScreen.drawBackground();
   scoreCounter = new ScoreCounter(width-60, 10);
 
-  gamePaused = false;
+  gamePaused = true;
   roundOngoing = true;
 }
 
@@ -112,6 +114,7 @@ void keyPressed() {
   }
   player.keyPressed();
 }
+
 void keyReleased() {
   player.keyReleased();
 }

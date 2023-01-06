@@ -6,6 +6,7 @@ class EnemyManager {
     //remove dead or offscreen enemies, update others
     for (int i = 0; i < enemies.size(); i++) {
       Enemy e = enemies.get(i);
+      if(e.getHealth() <= 0) e.die();
       if (e.isOffScreen() || e.getHealth() <= 0) {
         enemies.remove(e);
       } else {

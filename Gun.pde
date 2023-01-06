@@ -6,15 +6,17 @@ class Gun {
   float lastShotTime;
   //ArrayList<Bullet> bullets;
   boolean shooting;
+  boolean disabled;
 
   public Gun(float x, float y) {
     this.x = x;
     this.y = y;
-    shootingDirection = new PVector(0, -1);
-    delay = 0.5;
-    lastShotTime = 0;
+    this.shootingDirection = new PVector(0, -1);
+    this.delay = 0.5;
+    this.lastShotTime = 0;
     //bullets = new ArrayList<Bullet>();
-    shooting = false;
+    this.shooting = false;
+    this.disabled = false;
   }
 
   public Gun(float x, float y, PVector shootingDirection, float delay) {
@@ -31,13 +33,17 @@ class Gun {
 
     fill(0);
     rect(x-10, y-10, 20, 20);
-    
-    if (shooting) {
+
+    if (shooting && !disabled) {
       if (millis() - lastShotTime > delay * 1000) {
         bullets.add(new Bullet(x, y, 5, shootingDirection, false));
         lastShotTime = millis();
       }
     }
+  }
+
+  void setDisabled(boolean disabled) {
+    this.disabled = disabled;
   }
 
   void mousePressed() {

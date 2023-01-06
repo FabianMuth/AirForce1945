@@ -34,6 +34,7 @@ class MenuScreen {
       gamePaused = false;
     } else if (restartButton.isMouseOver()) {
       resetGame();
+      gamePaused = false;
     } else if (exitButton.isMouseOver()) {
       exit();
     }

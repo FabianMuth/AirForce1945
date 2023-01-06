@@ -70,6 +70,7 @@ class Player extends GameObject {
     lastDeathExplosion = millis();
     xDeathPos = x;
     dieToRight = round(random(1)) == 0 ? true : false;
+    gun.setDisabled(true);
     disabled = true;
   }
 
