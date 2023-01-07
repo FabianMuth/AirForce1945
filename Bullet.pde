@@ -10,7 +10,7 @@ class Bullet extends GameObject {
     this.y = y;
     this.health = 1;
     this.size = 5;
-    this.speed = 7;
+    this.speed = 700;
     this.damage = 1;
     this.isEnemyBullet = false;
     this.shootingDirection = new PVector(0, -1);
@@ -21,7 +21,7 @@ class Bullet extends GameObject {
     this(x, y);
     this.isEnemyBullet = isEnemyBullet;
   }
-
+  
   Bullet(float x, float y, float speed, PVector shootingDirection, boolean isEnemyBullet) {
     this(x, y);
     this.speed = speed;
@@ -29,15 +29,24 @@ class Bullet extends GameObject {
     this.isEnemyBullet = isEnemyBullet;
   }
 
+  Bullet(float x, float y, float speed, PVector shootingDirection, boolean isEnemyBullet, PImage sprite) {
+    this(x, y, speed, shootingDirection, isEnemyBullet);
+    this.sprite = sprite;
+  }
+
   void move() {
-    x += shootingDirection.x * speed;
-    y += shootingDirection.y * speed;
+    deltaTime = 1.0 / frameRate;
+    x += shootingDirection.x * speed * deltaTime;
+    y += shootingDirection.y * speed * deltaTime;
   }
 
   void draw() {
     noStroke();
-    fill(255);
+    fill(#00FFFD);
+    if(isEnemyBullet) fill(#08FC05);
     ellipse(x, y, size, 10);
+    //imageMode(CENTER);
+    //image(sprite, x, y, size, size);
   }
 
   boolean isOffScreen() {

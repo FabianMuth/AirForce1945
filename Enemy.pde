@@ -1,34 +1,36 @@
+import java.util.HashSet;
+
 class Enemy extends GameObject {
   int score;
   ScoreCounter scoreCounter;
-  ArrayList<String> alreadyHitBy;
+  HashSet<String> alreadyHitBy;
 
   Enemy(ScoreCounter scoreCounter) {
     this.x = random(width);
     this.y = -50;
     this.health = 2;
     this.size = 60;
-    this.speed = 3;
+    this.speed = 300;
     this.score = 100;
     this.scoreCounter = scoreCounter;
-    this.alreadyHitBy = new ArrayList<String>();
+    this.alreadyHitBy = new HashSet<String>();
     this.sprite = loadImage("data\\sprites\\Ship_5.png", "png");
   }
 
   void move() {
-    y += speed;
+    deltaTime = 1.0 / frameRate;
+    y += speed * deltaTime;
   }
 
   void draw() {   
     indicateWhenHit();
     imageMode(CENTER);
-    rotateZ(TWO_PI);
     image(sprite, x, y, size, size);
     if(displayHitbox) drawHitbox();
   }
 
   boolean isOffScreen() {
-    return y > height;
+    return y > height+size;
   }
 
   void die() {
@@ -36,7 +38,7 @@ class Enemy extends GameObject {
     explosions.add(new ParticleExplosion((int)x, (int)y, 30));
   }
 
-  ArrayList<String> getAlreadyHitBy() {
+  HashSet<String> getAlreadyHitBy() {
     return alreadyHitBy;
   }
 

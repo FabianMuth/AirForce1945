@@ -1,15 +1,5 @@
 class CollisionManager {
-  //Player player;
-  //ArrayList<Enemy> enemies;
-  //ArrayList<Bullet> bullets;
-
   public CollisionManager() {
-  }
-
-  public CollisionManager(Player player) {
-    //this.player = player;
-    //enemies = new ArrayList<Enemy>();
-    //bullets = new ArrayList<Bullet>();
   }
 
   void manageCollisions() {
@@ -26,16 +16,14 @@ class CollisionManager {
     try {
       for (int i = 0; i < bullets.size(); i++) {
         for (int j = 0; j < enemies.size(); j++) {
-          //if (bullets.size() > 0 && enemies.size() > 0) {
           Bullet b = bullets.get(i);
           Enemy e = enemies.get(j);
           if (b.collidesWith(e) && !e.getAlreadyHitBy().contains(b.getUUID())) {
-            println("enemy hit");
+            //println("enemy hit");
             b.takeDamage(1);
             e.takeDamage(1);
             e.addBulletAlreadyHitBy(b.getUUID());
           }
-          //}
         }
       }
     }

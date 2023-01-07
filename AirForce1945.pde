@@ -3,11 +3,13 @@
  * @author Fabian Muth
  * @version 07-01-2023
  *
- * TODO: add background (3d terrain & galaxy), add more sprites, add background music & SFX, add abilities, improve enemy spawner, change ScoreCounter from local to github
- * BUGS: EnemyMeteorite randomly flashing. Menu Screen not working correctly at game start.
+ * TODO: add background (3d terrain & galaxy), add more enemies, add bullet sprite, add background music & SFX, add abilities, improve enemy spawner, change ScoreCounter from local to github
+ * BUGS: Enemies somethimes flashing. Menu Screen not working correctly at game start in fullscreen. Game speed way too fast in the first seconds of the first round.
+ * CHANGELIST: Changed enemy 'alreadyHitBy' from ArrayList to HashSet. Changed removing dead/offscreen enemies, now uses iterator instead of for loop to stop enemies from blinking.
+ *      Changed: ParticleExplosions never got deleted and more drained performance the longer the game run, fixed. Changed: GameoObjects do not scale with frameRate anymore, deltaTime added.
  */
 
-static String version = "1.9";
+static String version = "2.0";
 
 public static boolean displayHitbox = false;
 public static boolean gamePaused = false;
@@ -31,8 +33,8 @@ FPSTracker fpsTracker;
 boolean showFpsTracker = true;
 
 void settings() {
-  //size(600, 800, P3D);
-  fullScreen(P3D);
+  size(700, 900, P3D);
+  //fullScreen(P3D);
 }
 
 void setup() {
@@ -47,7 +49,7 @@ void setup() {
 
 void draw() {
   if (!gamePaused) {
-    background(200);
+    background(50);
 
     //update bullets
     for (int i = bullets.size()-1; i >= 0; i--) {
@@ -118,7 +120,7 @@ void resetGame() {
   menuScreen = new MenuScreen();
   menuScreen.drawBackground();
   scoreCounter = new ScoreCounter(width-60, 10);
-  fpsTracker = new FPSTracker(600, 10, 10, 80, 40, 10);
+  fpsTracker = new FPSTracker(600, 10, 10, 80, 40, 15);
 
   gamePaused = true;
   roundOngoing = true;

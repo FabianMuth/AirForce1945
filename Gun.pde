@@ -36,7 +36,7 @@ class Gun {
 
     if (shooting && !disabled) {
       if (millis() - lastShotTime > delay * 1000) {
-        bullets.add(new Bullet(x, y, 10, shootingDirection, false));
+        bullets.add(new Bullet(x, y, 1000, shootingDirection, false));
         lastShotTime = millis();
       }
     }

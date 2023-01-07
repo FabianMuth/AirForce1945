@@ -8,6 +8,7 @@ class GameObject {
   boolean hit = false;
   int flashTimer = 0;
   boolean drawHitbox = true;
+  float deltaTime = 0;
 
   boolean collidesWith(GameObject other) {
     //float distance = sqrt((other.x - x) * (other.x - x) + (other.y - y) * (other.y - y));

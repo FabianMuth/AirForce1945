@@ -13,11 +13,11 @@ class Player extends GameObject {
   float lastDeathExplosion = 0;
 
   Player() {
-    this.health = 3;
+    this.health = 5;
     this.size = 50;
     this.x = width/2-size/2;
     this.y = height*0.8;
-    this.speed = 5;
+    this.speed = 300;
     gun = new Gun(x, y);
     this.sprite = loadImage("data\\sprites\\mainship_upscaled.png", "png");
   }
@@ -41,26 +41,27 @@ class Player extends GameObject {
   }
 
   void move() {
+    deltaTime = 1.0 / frameRate;
     if (!disabled) {
       if (wKeyPressed) {
-        y -= speed;
+        y -= speed*deltaTime;
       }
       if (aKeyPressed) {
-        x -= speed;
+        x -= speed*deltaTime;
       }
       if (sKeyPressed) {
-        y += speed;
+        y += speed*deltaTime;
       }
       if (dKeyPressed) {
-        x += speed;
+        x += speed*deltaTime;
       }
 
       x = constrain(x, 0 + size/2, width - size/2);
       y = constrain(y, 0 + size/2, height - size/2);
     } else {
-      y += speed/2;
+      y += speed/2*deltaTime;
       //x = noise(y * 0.0025) * height;
-      x = dieToRight ? lerp(x, xDeathPos+200, speed/4*0.01) : lerp(x, xDeathPos-200, speed/4*0.01);
+      x = dieToRight ? lerp(x, xDeathPos+200, speed/4*0.01*deltaTime) : lerp(x, xDeathPos-200, speed/4*0.01*deltaTime);
       if (millis() - lastDeathExplosion > deathExplosionSpacing * 1000) {
         explosions.add(new ParticleExplosion((int)x, (int)y, 100));
         lastDeathExplosion = millis();
