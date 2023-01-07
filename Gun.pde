@@ -12,7 +12,7 @@ class Gun {
     this.x = x;
     this.y = y;
     this.shootingDirection = new PVector(0, -1);
-    this.delay = 0.5;
+    this.delay = 0.3;
     this.lastShotTime = 0;
     //bullets = new ArrayList<Bullet>();
     this.shooting = false;
@@ -32,11 +32,11 @@ class Gun {
     //println("gun: " + bullets.size());
 
     fill(0);
-    rect(x-10, y-10, 20, 20);
+    //rect(x-10, y-10, 20, 20);
 
     if (shooting && !disabled) {
       if (millis() - lastShotTime > delay * 1000) {
-        bullets.add(new Bullet(x, y, 5, shootingDirection, false));
+        bullets.add(new Bullet(x, y, 10, shootingDirection, false));
         lastShotTime = millis();
       }
     }

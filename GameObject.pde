@@ -4,6 +4,10 @@ class GameObject {
   int damage;
   int size;
   float speed;
+  PImage sprite;
+  boolean hit = false;
+  int flashTimer = 0;
+  boolean drawHitbox = true;
 
   boolean collidesWith(GameObject other) {
     //float distance = sqrt((other.x - x) * (other.x - x) + (other.y - y) * (other.y - y));
@@ -13,7 +17,25 @@ class GameObject {
   }
 
   void takeDamage(int damage) {
-    health -= damage;
+    this.health -= damage;
+    this.hit = true;
+  }
+
+  void indicateWhenHit() {
+    if (hit) {
+      if (flashTimer < 2) {
+        tint(255, 0, 0);
+      } else {
+        tint(255);
+      }
+      flashTimer++;
+      if (flashTimer > 2) {
+        flashTimer = 0;
+        hit = false;
+      }
+    } else {
+      tint(255);
+    }
   }
 
   int getHealth() {
@@ -22,5 +44,16 @@ class GameObject {
 
   int getSize() {
     return this.size;
+  }
+
+  void drawHitbox() {
+    strokeWeight(2);
+    stroke(#00FFFD);
+    noFill();
+    circle(x, y, size);
+  }
+
+  void toggleHitbox() {
+    drawHitbox = !drawHitbox;
   }
 }

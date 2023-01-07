@@ -5,11 +5,13 @@ class EnemyMeteorite extends Enemy {
     this.speed = 1;
     this.size = 70;
     this.score = 500;
+    this.sprite = loadImage("data\\sprites\\meteorite_01.png", "png");
   }
   
   void draw() {
-    noStroke();
-    fill(155, 100, 100);
-    circle(x, y, size);
+    indicateWhenHit();
+    imageMode(CENTER);
+    image(sprite, x, y, size, size);
+    if(displayHitbox) drawHitbox();
   }
 }

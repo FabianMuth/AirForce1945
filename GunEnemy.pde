@@ -8,13 +8,6 @@ class GunEnemy extends Gun {
   void draw(float newX, float newY) {
     x = newX;
     y = newY;
-
-    //println("gun: " + bullets.size());
-
-    fill(0);
-    rectMode(CORNER);
-    rect(x-10, y-10, 20, 20);
-    
     
     if (millis() - lastShotTime > delay*1000) {
       //println("enemy shooting");

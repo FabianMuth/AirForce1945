@@ -1,14 +1,16 @@
 /**
  * A game like 1945 Air Force but worse.
  * @author Fabian Muth
- * @version 06-01-2023
+ * @version 07-01-2023
  *
- * TODO: add background (3d terrain & galaxy), add sprites, add background music & SFX, add hit visualizer, add end game screen, add abilities, improve enemy spawner, change ScoreCounter from local to github
+ * TODO: add background (3d terrain & galaxy), add more sprites, add background music & SFX, add abilities, improve enemy spawner, change ScoreCounter from local to github
+ * BUGS: EnemyMeteorite randomly flashing. Menu Screen not working correctly at game start.
  */
 
-static String version = "1.8";
+static String version = "1.9";
 
-boolean gamePaused = false;
+public static boolean displayHitbox = false;
+public static boolean gamePaused = false;
 boolean roundOngoing = true;
 float gameOverTime = 0;
 float afterDeathTime = 5;
@@ -25,12 +27,21 @@ ExplosionManager explosionManager;
 
 MenuScreen menuScreen;
 ScoreCounter scoreCounter;
+FPSTracker fpsTracker;
+boolean showFpsTracker = true;
+
+void settings() {
+  //size(600, 800, P3D);
+  fullScreen(P3D);
+}
 
 void setup() {
-  size(600, 800);
   surface.setTitle("1945 Air Force - Fabian Muth [mt221092] - V" + version);
   surface.setResizable(true);
-  //frameRate(20);
+  PFont font = createFont("Arial", 48);
+  textFont(font);
+  
+  frameRate(100);
   resetGame();
 }
 
@@ -66,6 +77,10 @@ void draw() {
 
     player.draw();
     scoreCounter.drawScore();
+    if (showFpsTracker) {
+      fpsTracker.update();
+      fpsTracker.draw();
+    }
 
     if (player.getHealth() <= 0 && roundOngoing) {
       player.die();
@@ -76,6 +91,7 @@ void draw() {
       resetGame();
     }
   } else {
+    cursor(CROSS);
     menuScreen.draw();
   }
 }
@@ -102,16 +118,22 @@ void resetGame() {
   menuScreen = new MenuScreen();
   menuScreen.drawBackground();
   scoreCounter = new ScoreCounter(width-60, 10);
+  fpsTracker = new FPSTracker(600, 10, 10, 80, 40, 10);
 
   gamePaused = true;
   roundOngoing = true;
 }
 
 void keyPressed() {
-  if (key == 'p' && roundOngoing) {
+  if ((key == 'p' || key == 27) && roundOngoing) {
+    key = 0; //overwrite escape -> exit();
     gamePaused = !gamePaused;
+    if (gamePaused) cursor(CROSS);
+    else noCursor();
     menuScreen.drawBackground();
   }
+  if (key == 'f') showFpsTracker = !showFpsTracker;
+  if (key == 'h') displayHitbox = !displayHitbox;
   player.keyPressed();
 }
 

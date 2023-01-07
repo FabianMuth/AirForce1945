@@ -26,15 +26,32 @@ class MenuScreen {
     strokeWeight(5);
     stroke(255, 0, 0);
     rect(0, 0, width, height);
-   //popMatrix();
+    
+    drawInfo();
+    //popMatrix();
+  }
+
+  void drawInfo() {
+    translate(0, height/4);
+    textAlign(CENTER, CENTER);
+    textSize(20);
+    fill(255);
+    smooth();
+    text("ESC or P  ...  toggle Menu / Pause Game", 0, 0);
+    text("W,A,S,D  ...  move Player", 0, 25);
+    text("Left Click  ...  Shoot", 0, 50);
+    text("F  ...  toggle FPS Tracker", 0, 75);
+    text("H  ...  toggle Hitboxes", 0, 100);
   }
 
   void mousePressed() {
     if (playButton.isMouseOver()) {
       gamePaused = false;
+      noCursor();
     } else if (restartButton.isMouseOver()) {
       resetGame();
       gamePaused = false;
+      noCursor();
     } else if (exitButton.isMouseOver()) {
       exit();
     }

@@ -19,6 +19,7 @@ class Player extends GameObject {
     this.y = height*0.8;
     this.speed = 5;
     gun = new Gun(x, y);
+    this.sprite = loadImage("data\\sprites\\mainship_upscaled.png", "png");
   }
 
   Player(float x, float y) {
@@ -29,11 +30,14 @@ class Player extends GameObject {
 
   void draw() {
     move();
-    noStroke();
-    fill(0, 200, 2000);
-    circle(x, y, size);
+
+    indicateWhenHit();
+    imageMode(CENTER);
+    image(sprite, x, y, size, size);
 
     gun.draw(x, y);
+
+    if (displayHitbox) drawHitbox();
   }
 
   void move() {
@@ -75,33 +79,17 @@ class Player extends GameObject {
   }
 
   void keyPressed() {
-    if (key == 'w') {
-      wKeyPressed = true;
-    }
-    if (key == 'a') {
-      aKeyPressed = true;
-    }
-    if (key == 's') {
-      sKeyPressed = true;
-    }
-    if (key == 'd') {
-      dKeyPressed = true;
-    }
+    if (key == 'w') wKeyPressed = true;
+    if (key == 'a') aKeyPressed = true;
+    if (key == 's') sKeyPressed = true;
+    if (key == 'd') dKeyPressed = true;
   }
 
   void keyReleased() {
-    if (key == 'w') {
-      wKeyPressed = false;
-    }
-    if (key == 'a') {
-      aKeyPressed = false;
-    }
-    if (key == 's') {
-      sKeyPressed = false;
-    }
-    if (key == 'd') {
-      dKeyPressed = false;
-    }
+    if (key == 'w') wKeyPressed = false;
+    if (key == 'a') aKeyPressed = false;
+    if (key == 's') sKeyPressed = false;
+    if (key == 'd') dKeyPressed = false;
   }
 
   void mousePressed() {

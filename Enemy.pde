@@ -6,25 +6,25 @@ class Enemy extends GameObject {
   Enemy(ScoreCounter scoreCounter) {
     this.x = random(width);
     this.y = -50;
-    this.health = 1;
+    this.health = 2;
     this.size = 60;
     this.speed = 3;
     this.score = 100;
     this.scoreCounter = scoreCounter;
     this.alreadyHitBy = new ArrayList<String>();
+    this.sprite = loadImage("data\\sprites\\Ship_5.png", "png");
   }
 
   void move() {
     y += speed;
   }
 
-  void draw() {
-    
-    noStroke();
-    fill(255, 0, 0);
-    circle(x, y, size);
-    fill(0);
-    circle(x,y,5);
+  void draw() {   
+    indicateWhenHit();
+    imageMode(CENTER);
+    rotateZ(TWO_PI);
+    image(sprite, x, y, size, size);
+    if(displayHitbox) drawHitbox();
   }
 
   boolean isOffScreen() {
