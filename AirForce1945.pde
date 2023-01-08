@@ -1,14 +1,14 @@
 /**
  * A game like 1945 Air Force but worse.
  * @author Fabian Muth
- * @version 07-01-2023
+ * @version 08-01-2023
  *
- * TODO: add background (galaxy), add more enemies, add bullet sprite, add background music & SFX, add abilities, improve enemy spawner, change ScoreCounter from local to github
- * BUGS: Enemies somethimes flashing. Menu Screen not working correctly at game start in fullscreen. Game speed way too fast in the first seconds of the first round.
- * CHANGELIST: Added 3D Terrain.
+ * TODO: add more enemies, add health bar, add bullet sprite, add background music & SFX, add abilities, improve enemy spawner, change ScoreCounter from local to github
+ * BUGS: Enemies somethimes flashing. Menu Screen not working correctly at game start in fullscreen. Game speed way too fast in the first seconds of the first round. Terrain3D size does not update on screen size change.
+ * CHANGELIST: Added Galaxy Background.
  */
 
-static String version = "2.1";
+static String version = "2.2";
 
 public static boolean displayHitbox = false;
 public static boolean gamePaused = false;
@@ -17,6 +17,7 @@ float gameOverTime = 0;
 float afterDeathTime = 5;
 
 Terrain3D terrain;
+Galaxy galaxy;
 
 Player player;
 ArrayList<Enemy> enemies;
@@ -43,9 +44,10 @@ void setup() {
   surface.setResizable(true);
   PFont font = createFont("Arial", 48);
   textFont(font);
-  
   frameRate(60);
+  
   terrain = new Terrain3D(20, 0.001);
+  galaxy = new Galaxy(1, 10);
   resetGame();
 }
 
@@ -53,6 +55,7 @@ void draw() {
   if (!gamePaused) {
     background(0);
     terrain.drawTerrain();
+    galaxy.drawGalaxy();
     //fill(0,0);
     //rect(0,0,width,height);
 
