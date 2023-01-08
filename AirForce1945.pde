@@ -3,19 +3,20 @@
  * @author Fabian Muth
  * @version 07-01-2023
  *
- * TODO: add background (3d terrain & galaxy), add more enemies, add bullet sprite, add background music & SFX, add abilities, improve enemy spawner, change ScoreCounter from local to github
+ * TODO: add background (galaxy), add more enemies, add bullet sprite, add background music & SFX, add abilities, improve enemy spawner, change ScoreCounter from local to github
  * BUGS: Enemies somethimes flashing. Menu Screen not working correctly at game start in fullscreen. Game speed way too fast in the first seconds of the first round.
- * CHANGELIST: Changed enemy 'alreadyHitBy' from ArrayList to HashSet. Changed removing dead/offscreen enemies, now uses iterator instead of for loop to stop enemies from blinking.
- *      Changed: ParticleExplosions never got deleted and more drained performance the longer the game run, fixed. Changed: GameoObjects do not scale with frameRate anymore, deltaTime added.
+ * CHANGELIST: Added 3D Terrain.
  */
 
-static String version = "2.0";
+static String version = "2.1";
 
 public static boolean displayHitbox = false;
 public static boolean gamePaused = false;
 boolean roundOngoing = true;
 float gameOverTime = 0;
 float afterDeathTime = 5;
+
+Terrain3D terrain;
 
 Player player;
 ArrayList<Enemy> enemies;
@@ -43,13 +44,17 @@ void setup() {
   PFont font = createFont("Arial", 48);
   textFont(font);
   
-  frameRate(100);
+  frameRate(60);
+  terrain = new Terrain3D(20, 0.001);
   resetGame();
 }
 
 void draw() {
   if (!gamePaused) {
-    background(50);
+    background(0);
+    terrain.drawTerrain();
+    //fill(0,0);
+    //rect(0,0,width,height);
 
     //update bullets
     for (int i = bullets.size()-1; i >= 0; i--) {
