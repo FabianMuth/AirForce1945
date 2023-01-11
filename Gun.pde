@@ -1,4 +1,6 @@
-class Gun {
+import processing.sound.*;
+
+class Gun extends PApplet {
   float x;
   float y;
   PVector shootingDirection;
@@ -31,13 +33,14 @@ class Gun {
 
     //println("gun: " + bullets.size());
 
-    fill(0);
+    //fill(0);
     //rect(x-10, y-10, 20, 20);
 
     if (shooting && !disabled) {
       if (millis() - lastShotTime > delay * 1000) {
         bullets.add(new Bullet(x, y, 1000, shootingDirection, false));
         lastShotTime = millis();
+        SFX_playerShooting.play();
       }
     }
   }

@@ -5,6 +5,7 @@ class Player extends GameObject {
   boolean dKeyPressed = false;
   boolean disabled = false;
 
+  PVector movement;
   Gun gun;
 
   float xDeathPos = 0;
@@ -17,7 +18,7 @@ class Player extends GameObject {
     this.size = 50;
     this.x = width/2-size/2;
     this.y = height*0.8;
-    this.speed = 300;
+    this.speed = 350;
     gun = new Gun(x, y);
     this.sprite = loadImage("data\\sprites\\mainship_upscaled.png", "png");
   }
@@ -43,18 +44,27 @@ class Player extends GameObject {
   void move() {
     deltaTime = 1.0 / frameRate;
     if (!disabled) {
+      movement = new PVector();
+      
       if (wKeyPressed) {
-        y -= speed*deltaTime;
+        movement.y -= 1;
       }
       if (aKeyPressed) {
-        x -= speed*deltaTime;
+        movement.x -= 1;
       }
       if (sKeyPressed) {
-        y += speed*deltaTime;
+        movement.y += 1;
       }
       if (dKeyPressed) {
-        x += speed*deltaTime;
+        movement.x += 1;
       }
+
+      if (movement.mag() > 0) {
+        movement.normalize();
+      }
+
+      x += movement.x * speed * deltaTime;
+      y += movement.y * speed * deltaTime;
 
       x = constrain(x, 0 + size/2, width - size/2);
       y = constrain(y, 0 + size/2, height - size/2);
