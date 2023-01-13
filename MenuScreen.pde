@@ -50,17 +50,22 @@ class MenuScreen {
     if (playButton.isMouseOver()) {
       gamePaused = false;
       noCursor();
+      soundFilesSFX.get("SFX_menuClick").play();
+      soundFilesMusic.get("SFX_backgroundTrack_1").rate(1);
     } else if (restartButton.isMouseOver()) {
       resetGame();
       gamePaused = false;
       noCursor();
+      soundFilesSFX.get("SFX_menuClick").play();
+      soundFilesMusic.get("SFX_backgroundTrack_1").rate(1);
     } else if (exitButton.isMouseOver()) {
       exit();
     } else if (volDecButton.isMouseOver()) {
       changeVolume(-0.001);
+      soundFilesSFX.get("SFX_menuClick").play();
     } else if (volIncButton.isMouseOver()) {
       changeVolume(0.001);
-
+      soundFilesSFX.get("SFX_menuClick").play();
     }
   }
 }
@@ -69,6 +74,7 @@ class Button {
   float x, y;
   float w, h;
   String text;
+  boolean soundAlreadyPlayed = false;
 
   Button(float x, float y, float w, float h, String text) {
     this.x = x;
@@ -79,16 +85,25 @@ class Button {
   }
 
   void display() {
-    strokeWeight(2);
-    stroke(#00F9FF);
+    strokeWeight(1);
+    stroke(100);
     rectMode(CENTER);
     fill(#BCE5E5);
-    if (isMouseOver()) fill(#00F9FF);
+    if (isMouseOver()) {
+      fill(#00F9FF);
+      if (!soundAlreadyPlayed) {
+        soundFilesSFX.get("SFX_menuHover").play();
+        soundAlreadyPlayed = true;
+      }
+    } else {
+      soundAlreadyPlayed = false;
+    }
     rect(x, y, w, h);
     fill(0);
     textAlign(CENTER, CENTER);
     text(text, x, y);
   }
+
 
   boolean isMouseOver() {
     return mouseX > x+width/2 - w/2 && mouseX < x+width/2 + w/2 && mouseY > y+height/2 - h/2 && mouseY < y+height/2 + h/2;

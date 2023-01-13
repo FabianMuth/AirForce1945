@@ -22,11 +22,11 @@ class Enemy extends GameObject {
     y += speed * deltaTime;
   }
 
-  void draw() {   
+  void draw() {
     indicateWhenHit();
     imageMode(CENTER);
     image(sprite, x, y, size, size);
-    if(displayHitbox) drawHitbox();
+    if (displayHitbox) drawHitbox();
   }
 
   boolean isOffScreen() {
@@ -38,6 +38,11 @@ class Enemy extends GameObject {
     explosions.add(new ParticleExplosion((int)x, (int)y, 30));
     soundFilesSFX.get("SFX_enemyDeath").play();
   }
+
+  /*void indicateWhenHit() {
+    super.indicateWhenHit();
+    if (hit) soundFilesSFX.get("SFX_enemyHit").play();
+  }*/
 
   HashSet<String> getAlreadyHitBy() {
     return alreadyHitBy;

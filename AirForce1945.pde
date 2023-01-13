@@ -3,15 +3,15 @@
  * @author Fabian Muth
  * @version 13-01-2023
  *
- * TODO: add more enemies, add health bar, add bullet sprite, add 3dterrain speed incerase over time, add abilities, improve enemy spawner, change ScoreCounter from local to github
+ * TODO: add endboss, add more enemies, add glow shader, add health bar, add bullet sprite, add 3dterrain speed incerase over time, add abilities, improve enemy spawner, change ScoreCounter from local to github
  * BUGS: Menu Screen not working correctly at game start in fullscreen. Game speed way too fast in the first seconds of the first round. Terrain3D size does not update on screen size change.
  *
- * CHANGELIST: Added enemy shooting SFX. Added volume changer to menu.
+ * CHANGELIST: Added SFX: player hit/death, player death, menu hover/click. Added music speed change on play/restart.
  */
 
 import processing.sound.*;
 
-static String version = "2.4";
+static String version = "2.5";
 
 public static boolean displayHitbox = false;
 public static boolean gamePaused = false;
@@ -37,7 +37,7 @@ ScoreCounter scoreCounter;
 FPSTracker fpsTracker;
 boolean showFpsTracker = true;
 
-public float volume = 0.001;
+public float volume = 0.01;
 public String soundFXPath = "data\\SFX\\";
 public String soundMusicPath = "data\\SFX\\music\\";
 public HashMap<String, SoundFile> soundFilesSFX = new HashMap<String, SoundFile>();
@@ -139,6 +139,7 @@ void resetGame() {
   fpsTracker = new FPSTracker(600, 10, 10, 80, 40, 15);
 
   soundFilesMusic.get("SFX_backgroundTrack_1").jump(0.5);
+  soundFilesMusic.get("SFX_backgroundTrack_1").rate(0.8);
 
   gamePaused = true;
   roundOngoing = true;
@@ -160,12 +161,16 @@ void keyPressed() {
 public void loadSounds() {
   //SFX
   soundFilesSFX.put("SFX_playerShooting", new SoundFile(this, soundFXPath + "pew-laser-fx_G_major.wav"));
-  soundFilesSFX.put("SFX_enemyShooting", new SoundFile(this, soundFXPath + "pew-laser-fx_C_minor.wav"));
-  soundFilesSFX.put("SFX_playerDeath", new SoundFile(this, soundFXPath + "stab-snail-house-style.wav"));
-  soundFilesSFX.put("SFX_enemyDeath", new SoundFile(this, soundFXPath + "stab-snail-house-style-2.wav"));
+  soundFilesSFX.put("SFX_enemyShooting", new SoundFile(this, soundFXPath + "laser-like-percussion-synthetic-transients-short-laser-faller.wav"));
+  soundFilesSFX.put("SFX_playerDeath", new SoundFile(this, soundFXPath + "stab-snail-house-style-2.wav"));
+  soundFilesSFX.put("SFX_enemyDeath", new SoundFile(this, soundFXPath + "chiptune-click-fx_A_minor.wav"));
+  soundFilesSFX.put("SFX_enemyHit", new SoundFile(this, soundFXPath + "8-bit-jump_130bpm_C_minor.wav"));
+  soundFilesSFX.put("SFX_menuHover", new SoundFile(this, soundFXPath + "wood-tap-click.wav"));
+  soundFilesSFX.put("SFX_menuClick", new SoundFile(this, soundFXPath + "ping-bing_E_major.wav"));
 
   //Music
   soundFilesMusic.put("SFX_backgroundTrack_1", new SoundFile(this, soundMusicPath + "MegaMan2_Wily1_2Remix_MMC8-bit_converted.wav"));
+  soundFilesMusic.put("SFX_menuTrack", new SoundFile(this, soundMusicPath + "MegaMan2_Wily1_2Remix_MMC8-bit_converted.wav"));
 
   //set Volumes
   setVolume(soundFilesSFX, volume);
