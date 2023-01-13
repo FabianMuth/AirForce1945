@@ -81,6 +81,7 @@ class Player extends GameObject {
 
   void die() {
     println("player died");
+    soundFilesSFX.get("SFX_playerDeath").play();
     explosions.add(new ParticleExplosion((int)x, (int)y, 100));
     lastDeathExplosion = millis();
     xDeathPos = x;

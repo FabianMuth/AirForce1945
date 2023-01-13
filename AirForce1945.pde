@@ -1,17 +1,17 @@
 /**
  * A game like 1945 Air Force but worse.
  * @author Fabian Muth
- * @version 11-01-2023
+ * @version 13-01-2023
  *
- * TODO: move public variables to Settings class, add more enemies, add health bar, add bullet sprite, add background music & SFX, add 3dterrain speed incerase over time, add abilities, improve enemy spawner, change ScoreCounter from local to github
+ * TODO: add more enemies, add health bar, add bullet sprite, add 3dterrain speed incerase over time, add abilities, improve enemy spawner, change ScoreCounter from local to github
  * BUGS: Menu Screen not working correctly at game start in fullscreen. Game speed way too fast in the first seconds of the first round. Terrain3D size does not update on screen size change.
  *
- * CHANGELIST: Added Background music & player shooting SFX. Changed players diagonal movement speed.
+ * CHANGELIST: Added enemy shooting SFX. Added volume changer to menu.
  */
 
 import processing.sound.*;
 
-static String version = "2.3";
+static String version = "2.4";
 
 public static boolean displayHitbox = false;
 public static boolean gamePaused = false;
@@ -37,8 +37,11 @@ ScoreCounter scoreCounter;
 FPSTracker fpsTracker;
 boolean showFpsTracker = true;
 
-SoundFile SFX_backgroundTrack_1;
-SoundFile SFX_playerShooting;
+public float volume = 0.001;
+public String soundFXPath = "data\\SFX\\";
+public String soundMusicPath = "data\\SFX\\music\\";
+public HashMap<String, SoundFile> soundFilesSFX = new HashMap<String, SoundFile>();
+public HashMap<String, SoundFile> soundFilesMusic = new HashMap<String, SoundFile>();
 
 void settings() {
   size(700, 900, P3D);
@@ -134,8 +137,8 @@ void resetGame() {
   menuScreen.drawBackground();
   scoreCounter = new ScoreCounter(width-60, 10);
   fpsTracker = new FPSTracker(600, 10, 10, 80, 40, 15);
-  
-  SFX_backgroundTrack_1.play();
+
+  soundFilesMusic.get("SFX_backgroundTrack_1").jump(0.5);
 
   gamePaused = true;
   roundOngoing = true;
@@ -154,12 +157,33 @@ void keyPressed() {
   player.keyPressed();
 }
 
-void loadSounds() {
-  SFX_backgroundTrack_1 = new SoundFile(this, "C:\\Users\\HP\\Documents\\Processing\\AirForce1945\\data\\SFX\\music\\MegaMan2_Wily1_2Remix_MMC8-bit_converted.wav");
-  SFX_backgroundTrack_1.amp(0.1);
-  
-  SFX_playerShooting = new SoundFile(this, "data\\SFX\\pew-laser-fx_G_major.wav");
-  SFX_playerShooting.amp(0.1);
+public void loadSounds() {
+  //SFX
+  soundFilesSFX.put("SFX_playerShooting", new SoundFile(this, soundFXPath + "pew-laser-fx_G_major.wav"));
+  soundFilesSFX.put("SFX_enemyShooting", new SoundFile(this, soundFXPath + "pew-laser-fx_C_minor.wav"));
+  soundFilesSFX.put("SFX_playerDeath", new SoundFile(this, soundFXPath + "stab-snail-house-style.wav"));
+  soundFilesSFX.put("SFX_enemyDeath", new SoundFile(this, soundFXPath + "stab-snail-house-style-2.wav"));
+
+  //Music
+  soundFilesMusic.put("SFX_backgroundTrack_1", new SoundFile(this, soundMusicPath + "MegaMan2_Wily1_2Remix_MMC8-bit_converted.wav"));
+
+  //set Volumes
+  setVolume(soundFilesSFX, volume);
+  setVolume(soundFilesMusic, volume);
+}
+
+public void setVolume(HashMap<String, SoundFile> soundFiles, float volume) {
+  for (SoundFile sound : soundFiles.values()) {
+    sound.amp(volume);
+  }
+}
+
+public void changeVolume(float deltaVolume) {
+  volume += deltaVolume;
+  volume = constrain(volume, 0, 1);
+  println(volume);
+  setVolume(soundFilesSFX, volume);
+  setVolume(soundFilesMusic, volume);
 }
 
 void keyReleased() {

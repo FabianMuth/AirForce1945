@@ -1,12 +1,12 @@
 class MenuScreen {
-  Button playButton;
-  Button restartButton;
-  Button exitButton;
+  Button playButton, restartButton, exitButton, volDecButton, volIncButton;
 
   public MenuScreen() {
     playButton = new Button(0, -50, 100, 50, "Play");
     restartButton = new Button(0, 0, 100, 50, "Restart");
     exitButton = new Button(0, 50, 100, 50, "Exit");
+    volDecButton = new Button(-20, 110, 40, 40, "-");
+    volIncButton = new Button(20, 110, 40, 40, "+");
   }
 
   void draw() {
@@ -15,6 +15,8 @@ class MenuScreen {
     playButton.display();
     restartButton.display();
     exitButton.display();
+    volDecButton.display();
+    volIncButton.display();
     popMatrix();
   }
 
@@ -26,7 +28,7 @@ class MenuScreen {
     strokeWeight(5);
     stroke(255, 0, 0);
     rect(0, 0, width, height);
-    
+
     drawInfo();
     //popMatrix();
   }
@@ -54,6 +56,11 @@ class MenuScreen {
       noCursor();
     } else if (exitButton.isMouseOver()) {
       exit();
+    } else if (volDecButton.isMouseOver()) {
+      changeVolume(-0.001);
+    } else if (volIncButton.isMouseOver()) {
+      changeVolume(0.001);
+
     }
   }
 }
@@ -72,11 +79,11 @@ class Button {
   }
 
   void display() {
-    strokeWeight(1);
-    stroke(0);
+    strokeWeight(2);
+    stroke(#00F9FF);
     rectMode(CENTER);
-    fill(200);
-    if (isMouseOver()) fill(0, 255, 100);
+    fill(#BCE5E5);
+    if (isMouseOver()) fill(#00F9FF);
     rect(x, y, w, h);
     fill(0);
     textAlign(CENTER, CENTER);

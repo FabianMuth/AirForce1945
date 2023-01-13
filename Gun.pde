@@ -40,7 +40,7 @@ class Gun extends PApplet {
       if (millis() - lastShotTime > delay * 1000) {
         bullets.add(new Bullet(x, y, 1000, shootingDirection, false));
         lastShotTime = millis();
-        SFX_playerShooting.play();
+        soundFilesSFX.get("SFX_playerShooting").play();
       }
     }
   }

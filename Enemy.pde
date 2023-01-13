@@ -36,6 +36,7 @@ class Enemy extends GameObject {
   void die() {
     this.scoreCounter.addScore(score);
     explosions.add(new ParticleExplosion((int)x, (int)y, 30));
+    soundFilesSFX.get("SFX_enemyDeath").play();
   }
 
   HashSet<String> getAlreadyHitBy() {
