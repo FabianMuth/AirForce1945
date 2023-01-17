@@ -1,6 +1,6 @@
 class EnemyBoss extends Enemy {
   boolean disabled = true;
-  
+
   GunEnemy[] bossGuns = new GunEnemy[4];
   float attackDelay = 4;
   float lastAttackTime = 0;
@@ -8,6 +8,10 @@ class EnemyBoss extends Enemy {
   boolean shootingAtPlayer = false;
   int activeShootAtPlayerGun = 0;
   float lastShotAtPlayer = 0;
+
+  boolean shootingMissiles = false;
+  int activeMissileLaunching = 0;
+  float lastMissileAtPlayer = 0;
 
   Gif laserCharge, laserShoot;
   boolean shootingLaser = false;
@@ -55,6 +59,7 @@ class EnemyBoss extends Enemy {
     indicateWhenHit();
     attack();
     if (shootingAtPlayer) shootAtPlayer();
+    if (shootingMissiles) shootHomingMissiles();
     imageMode(CENTER);
     image(sprite, x, y, 500, 500);
     if (shootingLaser) shootLaser();
@@ -74,7 +79,7 @@ class EnemyBoss extends Enemy {
         shootingAtPlayer = true;
         break;
       case 2:
-        shootHomingMissiles();
+        shootingMissiles = true;
         break;
       case 3:
         shootingAtPlayer = true;
@@ -124,7 +129,30 @@ class EnemyBoss extends Enemy {
   }
 
   void shootHomingMissiles() {
-    enemyBullets.add(new HomingMissile(x, y));
+    if (millis() - lastMissileAtPlayer > 200) {
+      switch(activeMissileLaunching) {
+      case 0:
+        enemyBullets.add(new HomingMissile(x, y, new PVector(5, -5)));
+        lastMissileAtPlayer = millis();
+        activeMissileLaunching++;
+        break;
+      case 1:
+        enemyBullets.add(new HomingMissile(x, y, new PVector(-5, -5)));
+        lastMissileAtPlayer = millis();
+        activeMissileLaunching++;
+        break;
+      case 2:
+        enemyBullets.add(new HomingMissile(x, y, new PVector(5, -5)));
+        lastMissileAtPlayer = millis();
+        activeMissileLaunching++;
+        break;
+      case 3:
+        enemyBullets.add(new HomingMissile(x, y, new PVector(-5, -5)));
+        shootingMissiles = false;
+        activeMissileLaunching = 0;
+        break;
+      }
+    }
   }
 
   void shootLaser() {
@@ -146,6 +174,7 @@ class EnemyBoss extends Enemy {
 
     if ((millis() - laserStartTime < laserDuration * 1000) && laserCharged) {
       laserStarted = true;
+      if (isPlayerInLaser()) player.takeDamage(1);
 
       animationCounter++;
       if (animationCounter % animationSpeed == 0) {
@@ -166,6 +195,17 @@ class EnemyBoss extends Enemy {
       image(laserShoot, 0, 0);
       popMatrix();
     }
+  }
+
+  boolean isPlayerInLaser() {
+    if (displayHitbox) {
+      strokeWeight(2);
+      stroke(#00FFFD);
+      noFill();
+      rect(width/2-60, 0, 120, height);
+    }
+    if (player.x > width/2 - 60 && player.x < width/2 + 60) return true;
+    else return false;
   }
 
   void initBossGuns() {

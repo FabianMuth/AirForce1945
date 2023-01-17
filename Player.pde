@@ -14,7 +14,7 @@ class Player extends GameObject {
   float lastDeathExplosion = 0;
 
   Player() {
-    this.health = 50;
+    this.health = 500;
     this.size = 50;
     this.x = width/2-size/2;
     this.y = height*0.8;

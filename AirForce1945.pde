@@ -4,16 +4,16 @@
  * @version 17-01-2023
  *
  * TODO: change deltaTime, add game cover, add more enemies, add glow shader, add health bar, add bullet sprite, add 3dterrain speed incerase over time, add abilities, improve enemy spawner, change ScoreCounter from local to github
-         Endboss: add spawn after time. add endless mode after defeat. add laser hitbox. change rocket visuals, launching position, hit accuracy.
+         Endboss: add spawn after time. add endless mode after defeat. add boss music.
  * BUGS: Menu Screen not working correctly at game start in fullscreen. Game speed way too fast in the first seconds of the first round. Terrain3D size does not update on screen size change. Sound distortion after ~2min playtime.
  *
- * CHANGELIST: Added Enemy: Endboss.
+ * CHANGELIST: Added laser hitbox/collision. Changed missiles looks, accuracy (+0.1) and launch velocity/direction, added TTL.
  */
 
 import processing.sound.*;
 import gifAnimation.*;
 
-static String version = "2.6";
+static String version = "2.7";
 
 PApplet thisMain = this;
 
@@ -63,6 +63,7 @@ void setup() {
   galaxy = new Galaxy(1, 10);
   loadSounds();
   resetGame();
+  
   enemies.add(new EnemyBoss(scoreCounter));
 }
 
