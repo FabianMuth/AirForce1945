@@ -1,17 +1,21 @@
 /**
- * A game like 1945 Air Force but worse.
+ * A game like 1945 Air Force / 1943 The Battle of Midway but in space.
  * @author Fabian Muth
- * @version 13-01-2023
+ * @version 17-01-2023
  *
- * TODO: add endboss, add more enemies, add glow shader, add health bar, add bullet sprite, add 3dterrain speed incerase over time, add abilities, improve enemy spawner, change ScoreCounter from local to github
- * BUGS: Menu Screen not working correctly at game start in fullscreen. Game speed way too fast in the first seconds of the first round. Terrain3D size does not update on screen size change.
+ * TODO: change deltaTime, add game cover, add more enemies, add glow shader, add health bar, add bullet sprite, add 3dterrain speed incerase over time, add abilities, improve enemy spawner, change ScoreCounter from local to github
+         Endboss: add spawn after time. add endless mode after defeat. add laser hitbox. change rocket visuals, launching position, hit accuracy.
+ * BUGS: Menu Screen not working correctly at game start in fullscreen. Game speed way too fast in the first seconds of the first round. Terrain3D size does not update on screen size change. Sound distortion after ~2min playtime.
  *
- * CHANGELIST: Added SFX: player hit/death, player death, menu hover/click. Added music speed change on play/restart.
+ * CHANGELIST: Added Enemy: Endboss.
  */
 
 import processing.sound.*;
+import gifAnimation.*;
 
-static String version = "2.5";
+static String version = "2.6";
+
+PApplet thisMain = this;
 
 public static boolean displayHitbox = false;
 public static boolean gamePaused = false;
@@ -55,10 +59,11 @@ void setup() {
   textFont(font);
   frameRate(60);
 
-  terrain = new Terrain3D(20, 0.001);
+  terrain = new Terrain3D(20, 0.01);
   galaxy = new Galaxy(1, 10);
   loadSounds();
   resetGame();
+  enemies.add(new EnemyBoss(scoreCounter));
 }
 
 void draw() {

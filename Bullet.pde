@@ -21,7 +21,7 @@ class Bullet extends GameObject {
     this(x, y);
     this.isEnemyBullet = isEnemyBullet;
   }
-  
+
   Bullet(float x, float y, float speed, PVector shootingDirection, boolean isEnemyBullet) {
     this(x, y);
     this.speed = speed;
@@ -41,13 +41,16 @@ class Bullet extends GameObject {
   }
 
   void draw() {
+    pushMatrix();
+    translate(x, y);
+    rotate(shootingDirection.heading() + HALF_PI);
     noStroke();
     fill(#00FFFD);
-    if(isEnemyBullet) fill(#08FC05);
-    ellipse(x, y, size, 10);
-    //imageMode(CENTER);
-    //image(sprite, x, y, size, size);
+    if (isEnemyBullet) fill(#08FC05);
+    ellipse(0, 0, size, 10);
+    popMatrix();
   }
+
 
   boolean isOffScreen() {
     return isEnemyBullet ? y > height : y < 0;

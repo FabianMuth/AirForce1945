@@ -14,7 +14,7 @@ class Player extends GameObject {
   float lastDeathExplosion = 0;
 
   Player() {
-    this.health = 5;
+    this.health = 50;
     this.size = 50;
     this.x = width/2-size/2;
     this.y = height*0.8;
@@ -45,7 +45,7 @@ class Player extends GameObject {
     deltaTime = 1.0 / frameRate;
     if (!disabled) {
       movement = new PVector();
-      
+
       if (wKeyPressed) {
         movement.y -= 1;
       }
@@ -114,5 +114,9 @@ class Player extends GameObject {
 
   int getHealth() {
     return this.health;
+  }
+
+  PVector getPosition() {
+    return new PVector(x, y);
   }
 }

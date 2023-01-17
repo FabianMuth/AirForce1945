@@ -23,9 +23,10 @@ class EnemyManager {
 
   void spawnEnemies() {
     if (random(1) < 0.01) {
-      enemies.add(new Enemy(scoreCounter));
-      enemies.add(new EnemyMeteorite(scoreCounter));
-      enemies.add(new EnemyShooterStraight(scoreCounter));
+      //enemies.add(new Enemy(scoreCounter));
+      //enemies.add(new EnemyMeteorite(scoreCounter));
+      //enemies.add(new EnemyShooterStraight(scoreCounter));
+      //enemies.add(new EnemyBoss(scoreCounter));
     }
   }
 }

@@ -59,12 +59,9 @@ class ScoreCounter {
     println("loading highscore");
     int scr = 0;
     for (TableRow row : scores.rows()) {
-      //println("scores: " + row.getColumnTitle(0));
-      //println("id: " + row.getInt("id"));
       scr = row.getInt("score");
       if (highscore < scr) highscore = scr;
     }
-    //println("highscore" + highscore);
   }
 
   void addScore(int score) {

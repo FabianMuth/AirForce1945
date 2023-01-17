@@ -8,12 +8,21 @@ class GunEnemy extends Gun {
   void draw(float newX, float newY) {
     x = newX;
     y = newY;
-    
+
     if (millis() - lastShotTime > delay*1000) {
       //println("enemy shooting");
       soundFilesSFX.get("SFX_enemyShooting").play();
       enemyBullets.add(new Bullet(x, y, 400, shootingDirection, true));
       lastShotTime = millis();
     }
+  }
+
+  void draw(float newX, float newY, PVector shootingDirection) {
+    x = newX;
+    y = newY;
+
+    //println("enemy shooting");
+    soundFilesSFX.get("SFX_enemyShooting").play();
+    enemyBullets.add(new Bullet(x, y, 400, shootingDirection, true));
   }
 }
