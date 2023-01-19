@@ -3,9 +3,9 @@ class CollisionManager {
   }
 
   void manageCollisions() {
-    println("\nb: " + bullets.size());
-    println("eb: " + enemyBullets.size());
-    println("e: " + enemies.size());
+    //println("\nb: " + bullets.size());
+    //println("eb: " + enemyBullets.size());
+    //println("e: " + enemies.size());
 
     checkBulletEnemyCollision();
     checkEnemybulletPlayerCollision();

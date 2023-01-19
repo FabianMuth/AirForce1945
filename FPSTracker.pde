@@ -26,7 +26,7 @@ class FPSTracker {
   }
 
   void draw() {
-    
+    pushMatrix();
     //frame
     fill(255, 128);
     stroke(255);
@@ -59,5 +59,6 @@ class FPSTracker {
     textAlign(CENTER, CENTER);
     textSize(fontSize);
     text(round(avgFPS), x+w+10, y+h/2);
+    popMatrix();
   }
 }

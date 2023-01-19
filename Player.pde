@@ -14,13 +14,18 @@ class Player extends GameObject {
   float lastDeathExplosion = 0;
 
   Player() {
-    this.health = 500;
+    this.health = 20;
     this.size = 50;
     this.x = width/2-size/2;
     this.y = height*0.8;
     this.speed = 350;
     gun = new Gun(x, y);
     this.sprite = loadImage("data\\sprites\\mainship_upscaled.png", "png");
+  }
+  
+  void takeDamage(int dmg){
+    println(health);
+    super.takeDamage(dmg);
   }
 
   Player(float x, float y) {

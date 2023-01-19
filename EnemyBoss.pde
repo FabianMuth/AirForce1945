@@ -28,11 +28,9 @@ class EnemyBoss extends Enemy {
   float chargeDuration = 0.5;
   float chargeStartTime = 0;
 
-
-
   public EnemyBoss(ScoreCounter sc) {
     super(sc);
-    this.health = 30;
+    this.health = 200;
     this.size = 200; //only hitbox, no correlation with image size
     this.x = width/2;
     this.y = - 200;
@@ -45,12 +43,31 @@ class EnemyBoss extends Enemy {
     initBossGuns();
   }
 
+  boolean movingRight = true;
+  boolean movingUp = false;
+
   void move() {
-    if (y <= 200) {
+    if (y <= 200 && disabled) {
       deltaTime = 1.0 / frameRate;
       y += speed * deltaTime;
     } else {
       disabled = false;
+    }
+
+    if (movingRight) {
+      x += 4 * deltaTime;
+      if (x > width/2+30) movingRight = false;
+    } else {
+      x -= 4 * deltaTime;
+      if (x < width/2-30) movingRight = true;
+    }
+
+    if (movingUp) {
+      y -= 2 * deltaTime;
+      if (y < 180) movingUp = false;
+    } else {
+      y += 2 * deltaTime;
+      if (y > 220) movingUp = true;
     }
   }
 
@@ -70,7 +87,6 @@ class EnemyBoss extends Enemy {
   void attack() {
     if (millis() - lastAttackTime > attackDelay*1000 && !disabled) {
       int random = int(random(4));
-      println(random);
       switch(random) {
       case 0:
         shoot();
@@ -132,26 +148,27 @@ class EnemyBoss extends Enemy {
     if (millis() - lastMissileAtPlayer > 200) {
       switch(activeMissileLaunching) {
       case 0:
-        enemyBullets.add(new HomingMissile(x, y, new PVector(5, -5)));
+        enemyBullets.add(new HomingMissile(x+60, y, new PVector(6, -5)));
         lastMissileAtPlayer = millis();
         activeMissileLaunching++;
         break;
       case 1:
-        enemyBullets.add(new HomingMissile(x, y, new PVector(-5, -5)));
+        enemyBullets.add(new HomingMissile(x-60, y, new PVector(-6, -5)));
         lastMissileAtPlayer = millis();
         activeMissileLaunching++;
         break;
       case 2:
-        enemyBullets.add(new HomingMissile(x, y, new PVector(5, -5)));
+        enemyBullets.add(new HomingMissile(x+60, y, new PVector(6, -5)));
         lastMissileAtPlayer = millis();
         activeMissileLaunching++;
         break;
       case 3:
-        enemyBullets.add(new HomingMissile(x, y, new PVector(-5, -5)));
+        enemyBullets.add(new HomingMissile(x-60, y, new PVector(-6, -5)));
         shootingMissiles = false;
         activeMissileLaunching = 0;
         break;
       }
+      soundFilesSFX.get("SFX_boss_missile").play();
     }
   }
 
@@ -174,6 +191,8 @@ class EnemyBoss extends Enemy {
 
     if ((millis() - laserStartTime < laserDuration * 1000) && laserCharged) {
       laserStarted = true;
+      if (!soundFilesSFX.get("SFX_boss_laser1").isPlaying()) soundFilesSFX.get("SFX_boss_laser1").play();
+      //if (!soundFilesSFX.get("SFX_boss_laser2").isPlaying()) soundFilesSFX.get("SFX_boss_laser2").play();
       if (isPlayerInLaser()) player.takeDamage(1);
 
       animationCounter++;
@@ -202,9 +221,9 @@ class EnemyBoss extends Enemy {
       strokeWeight(2);
       stroke(#00FFFD);
       noFill();
-      rect(width/2-60, 0, 120, height);
+      rect(x-60, 0, 120, height);
     }
-    if (player.x > width/2 - 60 && player.x < width/2 + 60) return true;
+    if (player.x > x - 60 && player.x < x + 60) return true;
     else return false;
   }
 
@@ -212,5 +231,12 @@ class EnemyBoss extends Enemy {
     for (int i = 0; i < bossGuns.length; i++) {
       bossGuns[i] = new GunEnemy(0, 0);
     }
+  }
+  
+  void die() {
+    this.scoreCounter.addScore(score);
+    explosions.add(new ParticleExplosion((int)x, (int)y, 200, 50));
+    soundFilesSFX.get("SFX_enemyDeath").play();
+    enemyManager.bossAlive = false;
   }
 }

@@ -21,7 +21,7 @@ class MenuScreen {
   }
 
   void drawBackground() {
-    //pushMatrix();
+    pushMatrix();
     rectMode(CENTER);
     translate(width/2, height/2);
     fill(0, 0, 0, 200);
@@ -30,10 +30,11 @@ class MenuScreen {
     rect(0, 0, width, height);
 
     drawInfo();
-    //popMatrix();
+    popMatrix();
   }
 
   void drawInfo() {
+    pushMatrix();
     translate(0, height/4);
     textAlign(CENTER, CENTER);
     textSize(20);
@@ -44,6 +45,7 @@ class MenuScreen {
     text("Left Click  ...  Shoot", 0, 50);
     text("F  ...  toggle FPS Tracker", 0, 75);
     text("H  ...  toggle Hitboxes", 0, 100);
+    popMatrix();
   }
 
   void mousePressed() {
@@ -85,12 +87,13 @@ class Button {
   }
 
   void display() {
+    pushMatrix();
     strokeWeight(1);
-    stroke(100);
+    stroke(0);
     rectMode(CENTER);
-    fill(#BCE5E5);
+    fill(#00FDFF);
     if (isMouseOver()) {
-      fill(#00F9FF);
+      fill(#00CCCE);
       if (!soundAlreadyPlayed) {
         soundFilesSFX.get("SFX_menuHover").play();
         soundAlreadyPlayed = true;
@@ -101,7 +104,9 @@ class Button {
     rect(x, y, w, h);
     fill(0);
     textAlign(CENTER, CENTER);
+    textSize(20);
     text(text, x, y);
+    popMatrix();
   }
 
 

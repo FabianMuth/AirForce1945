@@ -58,7 +58,7 @@ class HomingMissile extends Bullet {
   }
 
   boolean isOffScreen() {
-    if (x < 0 || x > width || y < 0 || y > height) return true;
+    if (x < -50 || x > width+50 || y < 0 || y > height) return true;
     else return false;
   }
 }

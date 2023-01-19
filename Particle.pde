@@ -16,7 +16,15 @@ class Particle {
     size = random(5, 20);
     maxLife = (int)random(30, 60);
     life = 0;
-    c = color(random(100, 255), 0, 0);
+    //c = color(random(100, 255), 0, 0);
+    //c = color(0, 255, 255,t);
+    c = color(0, random(150, 255), random(150, 255));
+  }
+
+  Particle(float x, float y, int force) {
+    this(x, y);
+    vx = random(-force, force);
+    vy = random (-force, force);
   }
 
   void update() {
