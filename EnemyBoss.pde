@@ -30,7 +30,7 @@ class EnemyBoss extends Enemy {
 
   public EnemyBoss(ScoreCounter sc) {
     super(sc);
-    this.health = 200;
+    this.health = 150;
     this.size = 200; //only hitbox, no correlation with image size
     this.x = width/2;
     this.y = - 200;
@@ -48,7 +48,6 @@ class EnemyBoss extends Enemy {
 
   void move() {
     if (y <= 200 && disabled) {
-      deltaTime = 1.0 / frameRate;
       y += speed * deltaTime;
     } else {
       disabled = false;
@@ -168,7 +167,7 @@ class EnemyBoss extends Enemy {
         activeMissileLaunching = 0;
         break;
       }
-      soundFilesSFX.get("SFX_boss_missile").play();
+      AudioPlayersSFX.get("SFX_boss_missile").play(0);
     }
   }
 
@@ -191,8 +190,8 @@ class EnemyBoss extends Enemy {
 
     if ((millis() - laserStartTime < laserDuration * 1000) && laserCharged) {
       laserStarted = true;
-      if (!soundFilesSFX.get("SFX_boss_laser1").isPlaying()) soundFilesSFX.get("SFX_boss_laser1").play();
-      //if (!soundFilesSFX.get("SFX_boss_laser2").isPlaying()) soundFilesSFX.get("SFX_boss_laser2").play();
+      if (!AudioPlayersSFX.get("SFX_boss_laser1").isPlaying()) AudioPlayersSFX.get("SFX_boss_laser1").play(0);
+      //if (!AudioPlayersSFX.get("SFX_boss_laser2").isPlaying()) AudioPlayersSFX.get("SFX_boss_laser2").play(0);
       if (isPlayerInLaser()) player.takeDamage(1);
 
       animationCounter++;
@@ -236,7 +235,7 @@ class EnemyBoss extends Enemy {
   void die() {
     this.scoreCounter.addScore(score);
     explosions.add(new ParticleExplosion((int)x, (int)y, 200, 50));
-    soundFilesSFX.get("SFX_enemyDeath").play();
+    AudioPlayersSFX.get("SFX_enemyDeath").play(0);
     enemyManager.bossAlive = false;
   }
 }

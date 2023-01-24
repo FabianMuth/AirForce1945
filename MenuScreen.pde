@@ -52,22 +52,22 @@ class MenuScreen {
     if (playButton.isMouseOver()) {
       gamePaused = false;
       noCursor();
-      soundFilesSFX.get("SFX_menuClick").play();
-      soundFilesMusic.get("SFX_backgroundTrack_1").rate(1);
+      AudioPlayersSFX.get("SFX_menuClick").play(0);
+      //AudioPlayersMusic.get("SFX_backgroundTrack_1").rate(1);
     } else if (restartButton.isMouseOver()) {
       resetGame();
       gamePaused = false;
       noCursor();
-      soundFilesSFX.get("SFX_menuClick").play();
-      soundFilesMusic.get("SFX_backgroundTrack_1").rate(1);
+      AudioPlayersSFX.get("SFX_menuClick").play(0);
+      //AudioPlayersMusic.get("SFX_backgroundTrack_1").rate(1);
     } else if (exitButton.isMouseOver()) {
       exit();
     } else if (volDecButton.isMouseOver()) {
-      changeVolume(-0.001);
-      soundFilesSFX.get("SFX_menuClick").play();
+      changeVolume(-2);
+      AudioPlayersSFX.get("SFX_menuClick").play(0);
     } else if (volIncButton.isMouseOver()) {
-      changeVolume(0.001);
-      soundFilesSFX.get("SFX_menuClick").play();
+      changeVolume(2);
+      AudioPlayersSFX.get("SFX_menuClick").play(0);
     }
   }
 }
@@ -95,7 +95,7 @@ class Button {
     if (isMouseOver()) {
       fill(#00CCCE);
       if (!soundAlreadyPlayed) {
-        soundFilesSFX.get("SFX_menuHover").play();
+        AudioPlayersSFX.get("SFX_menuHover").play(0);
         soundAlreadyPlayed = true;
       }
     } else {

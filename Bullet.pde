@@ -35,7 +35,6 @@ class Bullet extends GameObject {
   }
 
   void move() {
-    deltaTime = 1.0 / frameRate;
     x += shootingDirection.x * speed * deltaTime;
     y += shootingDirection.y * speed * deltaTime;
   }

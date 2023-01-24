@@ -11,7 +11,7 @@ class GunEnemy extends Gun {
 
     if (millis() - lastShotTime > delay*1000) {
       //println("enemy shooting");
-      soundFilesSFX.get("SFX_enemyShooting").play();
+      AudioPlayersSFX.get("SFX_enemyShooting").play(0);
       enemyBullets.add(new Bullet(x, y, 400, shootingDirection, true));
       lastShotTime = millis();
     }
@@ -22,7 +22,7 @@ class GunEnemy extends Gun {
     y = newY;
 
     //println("enemy shooting");
-    soundFilesSFX.get("SFX_enemyShooting").play();
+    AudioPlayersSFX.get("SFX_enemyShooting").play(0);
     enemyBullets.add(new Bullet(x, y, 400, shootingDirection, true));
   }
 }

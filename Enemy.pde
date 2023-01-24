@@ -18,7 +18,6 @@ class Enemy extends GameObject {
   }
 
   void move() {
-    deltaTime = 1.0 / frameRate;
     y += speed * deltaTime;
   }
 
@@ -36,12 +35,12 @@ class Enemy extends GameObject {
   void die() {
     this.scoreCounter.addScore(score);
     explosions.add(new ParticleExplosion((int)x, (int)y, 30));
-    soundFilesSFX.get("SFX_enemyDeath").play();
+    AudioPlayersSFX.get("SFX_enemyDeath").play(0);
   }
 
   /*void indicateWhenHit() {
     super.indicateWhenHit();
-    if (hit) soundFilesSFX.get("SFX_enemyHit").play();
+    if (hit) AudioPlayersSFX.get("SFX_enemyHit").play(0);
   }*/
 
   HashSet<String> getAlreadyHitBy() {

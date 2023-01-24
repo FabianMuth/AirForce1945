@@ -28,7 +28,6 @@ class HomingMissile extends Bullet {
   }
 
   void move() {
-    deltaTime = 1.0 / frameRate;
     if(millis() - launchTime > timeToLive * 1000) this.health = 0;
     
     acc = PVector.sub(player.getPosition(), pos);
